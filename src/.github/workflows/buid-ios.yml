@@ -24,8 +24,10 @@ jobs:
 
       - name: Build Ionic app
         run: |
+          npm install @ionic-native/core@latest --legacy-peer-deps
           ionic build
           npx cap sync ios
+
 
       - name: Build iOS archive (unsigned)
         run: |
