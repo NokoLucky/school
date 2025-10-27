@@ -9,50 +9,87 @@ import {
   User
 } from 'firebase/auth';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular'; // Add this import
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private toastCtrl: ToastController  // Add this
+  ) {}
+
+  // Helper method for debug toasts
+  private async showDebugToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: `DEBUG: ${message}`,
+      duration: 3000,
+      position: 'bottom',
+      color: 'secondary'
+    });
+    await toast.present();
+  }
 
   // Email/Password Registration
   async register(email: string, password: string): Promise<any> {
+    await this.showDebugToast('Step 1: Starting registration');
+    
     try {
+      await this.showDebugToast('Step 2: Calling createUserWithEmailAndPassword');
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await this.showDebugToast('Step 3: Registration successful!');
       return { success: true, user: userCredential.user };
     } catch (error: any) {
+      await this.showDebugToast(`Step 4: Error: ${error.code}`);
       return { success: false, error: this.getFriendlyErrorMessage(error.code) };
     }
   }
 
   // Email/Password Login
   async login(email: string, password: string): Promise<any> {
+    await this.showDebugToast('Step 1: Starting email login');
+    
     try {
+      await this.showDebugToast('Step 2: Calling signInWithEmailAndPassword');
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      await this.showDebugToast('Step 3: Email login successful!');
       return { success: true, user: userCredential.user };
     } catch (error: any) {
+      await this.showDebugToast(`Step 4: Error: ${error.code}`);
       return { success: false, error: this.getFriendlyErrorMessage(error.code) };
     }
   }
 
   // Google Login
   async loginWithGoogle(): Promise<any> {
+    await this.showDebugToast('Step 1: Starting Google login');
+    
     try {
+      await this.showDebugToast('Step 2: Creating Google provider');
       const provider = new GoogleAuthProvider();
+      
+      await this.showDebugToast('Step 3: Calling signInWithPopup');
       const userCredential = await signInWithPopup(auth, provider);
+      
+      await this.showDebugToast('Step 4: Google login successful!');
       return { success: true, user: userCredential.user };
     } catch (error: any) {
+      await this.showDebugToast(`Step 5: Error: ${error.code}`);
       return { success: false, error: this.getFriendlyErrorMessage(error.code) };
     }
   }
 
   // Logout
   async logout(): Promise<void> {
+    await this.showDebugToast('Starting logout');
+    
     try {
       await signOut(auth);
+      await this.showDebugToast('Logout successful');
       this.router.navigate(['/login']);
     } catch (error) {
+      await this.showDebugToast('Logout error occurred');
       console.error('Logout error:', error);
     }
   }
@@ -86,29 +123,28 @@ export class AuthService {
   }
 
   // 💬 Friendly error translator
- private getFriendlyErrorMessage(code: string): string {
-  switch (code) {
-    case 'auth/invalid-credential':
-    case 'auth/invalid-credentials':
-    case 'auth/wrong-password':
-      return 'Incorrect email or password. Please try again.';
-    case 'auth/user-not-found':
-      return 'No account found with this email.';
-    case 'auth/invalid-email':
-      return 'Please enter a valid email address.';
-    case 'auth/user-disabled':
-      return 'This account has been disabled. Please contact support.';
-    case 'auth/email-already-in-use':
-      return 'This email is already registered. Try signing in instead.';
-    case 'auth/weak-password':
-      return 'Password should be at least 6 characters.';
-    case 'auth/popup-closed-by-user':
-      return 'Login was cancelled. Please try again.';
-    case 'auth/network-request-failed':
-      return 'Network error. Please check your internet connection.';
-    default:
-      return 'Something went wrong. Please try again later.';
+  private getFriendlyErrorMessage(code: string): string {
+    switch (code) {
+      case 'auth/invalid-credential':
+      case 'auth/invalid-credentials':
+      case 'auth/wrong-password':
+        return 'Incorrect email or password. Please try again.';
+      case 'auth/user-not-found':
+        return 'No account found with this email.';
+      case 'auth/invalid-email':
+        return 'Please enter a valid email address.';
+      case 'auth/user-disabled':
+        return 'This account has been disabled. Please contact support.';
+      case 'auth/email-already-in-use':
+        return 'This email is already registered. Try signing in instead.';
+      case 'auth/weak-password':
+        return 'Password should be at least 6 characters.';
+      case 'auth/popup-closed-by-user':
+        return 'Login was cancelled. Please try again.';
+      case 'auth/network-request-failed':
+        return 'Network error. Please check your internet connection.';
+      default:
+        return 'Something went wrong. Please try again later.';
+    }
   }
-}
-
 }

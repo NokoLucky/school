@@ -35,11 +35,11 @@ export class LoginPage implements OnInit {
       spinner: 'crescent',
       cssClass: 'custom-loader',
     });
-    await loading.present();
+    //await loading.present();
 
     try {
       const result = await this.authService.login(this.email, this.password);
-      await loading.dismiss();
+     // await loading.dismiss();
 
       if (result.success) {
         this.showToast('Welcome back!', 'success');
@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
         this.showToast(result.error, 'danger');
       }
     } catch (error) {
-      await loading.dismiss();
+      //await loading.dismiss();
       this.showToast('An unexpected error occurred. Please try again.', 'danger');
     }
   }
@@ -60,11 +60,11 @@ export class LoginPage implements OnInit {
       spinner: 'crescent',
       cssClass: 'custom-loader',
     });
-    await loading.present();
+    //await loading.present();
 
     try {
       const result = await this.authService.loginWithGoogle();
-      await loading.dismiss();
+      //await loading.dismiss();
 
       if (result.success) {
         this.showToast('Welcome!', 'success');
@@ -73,7 +73,7 @@ export class LoginPage implements OnInit {
         this.showToast(result.error, 'danger');
       }
     } catch (error) {
-      await loading.dismiss();
+      //await loading.dismiss();
       this.showToast('An unexpected error occurred. Please try again.', 'danger');
     }
   }
