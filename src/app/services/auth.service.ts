@@ -47,21 +47,6 @@ export class AuthService {
   }
 
   // Email/Password Login
-  async login(email: string, password: string): Promise<any> {
-    await this.showDebugToast('Step 1: Starting email login');
-    
-    try {
-      await this.showDebugToast('Step 2: Calling signInWithEmailAndPassword');
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      await this.showDebugToast('Step 3: Email login successful!');
-      return { success: true, user: userCredential.user };
-    } catch (error: any) {
-      await this.showDebugToast(`Step 4: Error: ${error.code}`);
-      return { success: false, error: this.getFriendlyErrorMessage(error.code) };
-    }
-  }
-
-  // Google Login
   async loginWithGoogle(): Promise<any> {
     await this.showDebugToast('Step 1: Starting Google login');
     
@@ -69,16 +54,69 @@ export class AuthService {
       await this.showDebugToast('Step 2: Creating Google provider');
       const provider = new GoogleAuthProvider();
       
+      // Set custom parameters
+      provider.setCustomParameters({
+        prompt: 'select_account'
+      });
+      
       await this.showDebugToast('Step 3: Calling signInWithPopup');
-      const userCredential = await signInWithPopup(auth, provider);
+      
+      // Add a timeout to prevent hanging
+      const loginPromise = signInWithPopup(auth, provider);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Timeout after 30 seconds')), 30000)
+      );
+      
+      const userCredential = await Promise.race([loginPromise, timeoutPromise]) as any;
       
       await this.showDebugToast('Step 4: Google login successful!');
       return { success: true, user: userCredential.user };
+      
     } catch (error: any) {
-      await this.showDebugToast(`Step 5: Error: ${error.code}`);
+      // Get the exact error message
+      let errorMessage = 'Unknown error';
+      if (error.code) {
+        errorMessage = `${error.code}: ${error.message}`;
+      } else {
+        errorMessage = error.toString();
+      }
+      
+      await this.showDebugToast(`Step 5: Error - ${errorMessage}`);
+      
+      return { 
+        success: false, 
+        error: this.getFriendlyErrorMessage(error.code),
+        details: errorMessage
+      };
+    }
+  }
+
+  // Also update the email login with timeout
+  async login(email: string, password: string): Promise<any> {
+    await this.showDebugToast('Step 1: Starting email login');
+    
+    try {
+      await this.showDebugToast('Step 2: Calling signInWithEmailAndPassword');
+      
+      // Add timeout for email login too
+      const loginPromise = signInWithEmailAndPassword(auth, email, password);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Timeout after 30 seconds')), 30000)
+      );
+      
+      const userCredential = await Promise.race([loginPromise, timeoutPromise]) as any;
+      
+      await this.showDebugToast('Step 3: Email login successful!');
+      return { success: true, user: userCredential.user };
+      
+    } catch (error: any) {
+      let errorMessage = error.code ? `${error.code}: ${error.message}` : error.toString();
+      await this.showDebugToast(`Step 4: Error - ${errorMessage}`);
       return { success: false, error: this.getFriendlyErrorMessage(error.code) };
     }
   }
+
+ 
 
   // Logout
   async logout(): Promise<void> {

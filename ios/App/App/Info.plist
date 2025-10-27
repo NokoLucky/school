@@ -46,7 +46,7 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 
-	<!-- URL Schemes for Firebase Auth -->
+	<!-- In Info.plist - REPLACE the entire CFBundleURLTypes section -->
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -54,6 +54,7 @@
 			<string>Google Sign-In</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<!-- This should be your REVERSED_CLIENT_ID from GoogleService-Info.plist -->
 				<string>com.googleusercontent.apps.166253399501-q8s19mr2kn3ltaqhippjec6rpc7t8r10</string>
 			</array>
 		</dict>
@@ -71,6 +72,6 @@
 	<array>
 		<string>googlechromes</string>
 		<string>com.googleusercontent.apps.166253399501-q8s19mr2kn3ltaqhippjec6rpc7t8r10</string>
-	</array>
+	</array>	
 </dict>
 </plist>
