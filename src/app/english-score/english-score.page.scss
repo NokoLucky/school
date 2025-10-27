@@ -1,0 +1,40 @@
+.jobDivs
+{
+    margin: 0 10px  0 10px;
+    background-color: lightgrey;
+    height: 50px;
+    
+}
+
+.headings
+{
+    font-size: 1.1em;
+    font-weight: 400;
+}
+
+.back
+{
+  --background-color: grey;
+}
+
+.paragraph
+{
+    line-height: 50px;
+    margin-left: 5px;
+}
+
+.parent {
+    font-size: small;
+  }
+  .child {
+    font-size: small;
+    display: inline-block;
+    border: 1px solid #2dd36f;
+    padding: 1rem 1rem;
+    margin: 2px;
+    width: 48%;
+    vertical-align: middle;
+    border-radius: 10px;
+    --moz-border-radius: 10px;
+    --webkit-border-radius: 10px;
+  }

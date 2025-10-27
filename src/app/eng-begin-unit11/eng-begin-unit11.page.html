@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="dark">
+      </ion-back-button>
+   </ion-buttons>
+   <ion-title><img class="image" src="assets/logo.png" width="100" height="60"/></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="back">
+
+  <div class="jobDivs" tappable  routerLink="/english">
+    <p class="paragraph">1. Travelling / voyager</p>
+  </div><br/>
+
+  <ion-grid>
+    <ion-row *ngFor="let item of data; index as i">
+      <ion-col class="cell-class" size="6">
+        {{ item.field1 }}
+      </ion-col>
+      <ion-col class="cell-class" size="6">
+        {{ item.field2 }}
+      </ion-col> 
+    </ion-row>
+  </ion-grid>
+<br/>
+  
+    Exemples
+    <ul>
+    <li>What do you do on holidays? <span style="font-weight: bold;">- Qu’est-ce que tu fais pendant les vacances?</span> </li>
+    <li>I travel overseas. <span style="font-weight: bold;">- je voyage à l'étranger.</span> </li>
+    <li>I have a connecting flight. <span style="font-weight: bold;">- j'ai un vol de correspondance.</span> </li>
+    <li>My father doesn't like to fly, it makes him nervous. <span style="font-weight: bold;">- Mon père n'aime pas prendre l’avion, ça le rend nerveux.</span> </li>
+    <li>I don't like tourist attractions, they are always too busy. <span style="font-weight: bold;">- Je n'aime pas les attractions touristiques, elles sont toujours plein de monde.</span> </li>
+    <li>This year I will travel to Mauritius on holidays. <span style="font-weight: bold;">- Cette année, je voyagerai à l'île Maurice pour les vacances.</span> </li>
+    <li>Traveling by car is a good way to know a country. <span style="font-weight: bold;">- Voyager en voiture est un bon moyen de connaître un pays.</span> </li>
+    </ul>
+
+    <div class="jobDivs" tappable  routerLink="/english">
+      <p class="paragraph">2. Les adjectifs possessifs</p>
+    </div><br/>
+  
+    <ion-grid>
+      <ion-row *ngFor="let item of data1; index as i">
+        <ion-col class="cell-class" size="6">
+          {{ item.secfield1 }}
+        </ion-col>
+        <ion-col class="cell-class" size="6">
+          {{ item.secfield2 }}
+        </ion-col> 
+      </ion-row>
+    </ion-grid>
+ <br/>
+
+ Exemples
+    <ul>
+    <li>My brother is smart. <span style="font-weight: bold;">- Mon frère est intelligent.</span> </li>
+    <li>Your notebook is beautiful. <span style="font-weight: bold;">- Ton cahier est beau.</span> </li>
+    <li>His work is improving. <span style="font-weight: bold;">- Son travail s’améliore.</span> </li>
+    <li>She offers flowers to her mother. <span style="font-weight: bold;">- Elle offre des fleurs à sa mère.</span> </li>
+    <li>Our neighbour will dine with us tonight. <span style="font-weight: bold;">- Notre voisin dînera chez nous ce soir.</span> </li>
+    <li>Your assignment seems well presented. <span style="font-weight: bold;">- Votre devoir semble bien présenté.</span> </li>
+    <li>Their reason is acceptable. <span style="font-weight: bold;">- Leur raison est acceptable.</span> </li>
+    </ul>
+
+
+    <div class="jobDivs" tappable  routerLink="/english">
+      <p class="paragraph">3. Les conjonctions de coordinations</p>
+    </div><br/>
+
+    <p>Les conjonctions de coordination sont des mots qui permettent de relier les mots ou les phrases. </p>	
+  
+    <ion-grid>
+      <ion-row *ngFor="let item of data2; index as i">
+        <ion-col class="cell-class" size="6">
+          {{ item.thrfield1 }}
+        </ion-col>
+        <ion-col class="cell-class" size="6">
+          {{ item.thrfield2 }}
+        </ion-col> 
+      </ion-row>
+    </ion-grid>
+ <br/>
+
+ Exemples
+    <ul>
+    <li>I would like to speak French but I have a lot of trouble. <span style="font-weight: bold;">- J’aimerais parler français mais j’ai beaucoup de mal.</span> </li>
+    <li>Do you take a fruit juice or a cup of tea? <span style="font-weight: bold;">- Prendrez-vous un jus de fruit ou une tasse de thé ?</span> </li>
+    <li>Young people and children love this singer. <span style="font-weight: bold;">- Les jeunes et les enfants aiment ce chanteur.</span> </li>
+    <li>I'm invited, so I'll go to the party. <span style="font-weight: bold;">- Je suis invité, donc j’irai à la fête.</span> </li>
+    <li>I like him a lot, but he does not know it. <span style="font-weight: bold;">- Je l’aime beaucoup, or il ne le sait pas.</span> </li>
+    <li>He does not like rice or pasta <span style="font-weight: bold;">- Il n’aime ni le riz, ni les pâtes.</span> </li>
+    <li>He speaks loudly because the students are chatting. <span style="font-weight: bold;">- Il parle fort, car les élèves bavardent.</span> </li>
+    </ul>
+    
+</ion-content>

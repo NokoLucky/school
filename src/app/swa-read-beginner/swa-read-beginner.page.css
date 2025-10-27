@@ -1,0 +1,78 @@
+/************************************
+ * GENERAL STYLES
+ ************************************/
+ .content-bg {
+    --background: #ffffff;
+    padding: 10px;
+  }
+  
+  /************************************
+   * HEADER
+   ************************************/
+ 
+.back {
+    --background-color: #f8f8f8;
+  }
+  
+  .header-toolbar {
+    background-color: #ffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 🖼️ Logo Styling */
+  .image {
+    display: block;
+    margin: auto;
+    width: 120px;
+    height: auto;
+  }
+  
+  /************************************
+   * LIST ITEMS
+   ************************************/
+  ion-item {
+    border-radius: 15px;
+    margin: 10px;
+    background-color: #fff3cd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+  
+  .pdf-icon {
+    font-size: 1.8em;
+    margin-right: 10px;
+    color: #ff66ff;
+  }
+  
+  .pdf-label {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: black;
+  }
+  
+  /************************************
+   * RESPONSIVE
+   ************************************/
+  @media (max-width: 600px) {
+    .pdf-label {
+      font-size: 1.2em;
+    }
+  }
+
+
+.spinner-wrapper {
+  margin-top: 30%;
+}
+
+.spinner-text {
+  margin-top: 10px;
+  color: #444;
+  font-size: 14px;
+}
+
+
+  

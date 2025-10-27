@@ -24,3 +24,61 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+/* ===== src/global.scss ===== */
+
+/* 🌈 Custom Vibrant Alert Styling */
+.custom-alert {
+  --background: #fff0ff;
+  --backdrop-opacity: 0.7;
+  --border-radius: 20px;
+  --color: #333;
+  font-family: 'ComicSansCustom', cursive, sans-serif;
+  text-align: center;
+  animation: popIn 0.3s ease-out;
+  box-shadow: 0 6px 18px rgba(255, 102, 255, 0.4);
+}
+
+/* 🎉 Header style */
+.custom-alert .alert-head {
+  color: #ff66ff;
+  font-size: 1.6em;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(255, 102, 255, 0.4);
+}
+
+/* 🗨️ Message text */
+.custom-alert .alert-message {
+  font-size: 1.2em;
+  color: #555;
+  padding-top: 10px;
+  line-height: 1.4em;
+}
+
+/* 💖 OK Button Styling */
+.alert-ok-btn {
+  background-color: #ff66ff !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  font-weight: bold !important;
+  padding: 8px 18px !important;
+  box-shadow: 2px 3px 10px rgba(255, 102, 255, 0.5);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.alert-ok-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 3px 5px 12px rgba(255, 102, 255, 0.7);
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+

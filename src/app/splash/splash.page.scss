@@ -1,0 +1,47 @@
+.splash-content {
+    background: #ff66ff;          /* Main app color */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .curtain {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: #ffffff;         /* Curtain color (can be adjusted) */
+    z-index: 10;
+  }
+  
+  .curtain.left {
+    left: 0;
+    animation: openLeft 1.5s ease-in-out forwards;
+  }
+  
+  .curtain.right {
+    right: 0;
+    animation: openRight 1.5s ease-in-out forwards;
+  }
+  
+  @keyframes openLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+  }
+  
+  @keyframes openRight {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100%); }
+  }
+  
+  .logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    animation: fadeOut 1s ease-in-out 1s forwards;
+  }
+  
+  @keyframes fadeOut {
+    to { opacity: 0; }
+  }

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reading Materials</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-bg">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+    <p>Loading reading materials...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="ion-text-center ion-padding">
+    <ion-icon name="warning-outline" size="large"></ion-icon>
+    <p>{{ error }}</p>
+    <ion-button (click)="loadFrenchReadingLessons()" fill="outline">
+      Try Again
+    </ion-button>
+  </div>
+
+  <!-- Success State -->
+  <ion-list *ngIf="!isLoading && !error">
+    <ion-item *ngFor="let pdf of pdfs" (click)="openPDF(pdf.url)">
+      <ion-icon name="document" slot="start" class="pdf-icon"></ion-icon>
+      <ion-label class="pdf-label">{{ pdf.name }}</ion-label>
+    </ion-item>
+    
+    <!-- Empty State -->
+    <div *ngIf="pdfs.length === 0" class="ion-text-center ion-padding">
+      <p>No reading materials available.</p>
+    </div>
+  </ion-list>
+</ion-content>

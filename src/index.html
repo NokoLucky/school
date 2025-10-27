@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Ionic App</title>
+  <title>Extralingual</title>
 
   <base href="/" />
 
@@ -14,13 +14,38 @@
 
   <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
 
-  <!-- add to homescreen for ios -->
+  <link rel="manifest" href="assets/manifest.webmanifest">
+
+
+  <!-- iOS specific meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="Extralingual" />
+
+  <!-- Theme color for Android -->
+  <meta name="theme-color" content="#ffcc00" />
+
+  <!-- Splash screen for iOS -->
+  <link rel="apple-touch-icon" href="assets/icon/icon.png" />
+
+  <!-- Preload critical resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Capacitor script (injected during build) -->
+  <script type="module" src="/src/main.ts"></script>
 </head>
 
 <body>
   <app-root></app-root>
+  
+  <!-- Fallback for no JavaScript -->
+  <noscript>
+    <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+      <h1>JavaScript Required</h1>
+      <p>This application requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
+    </div>
+  </noscript>
 </body>
 
 </html>

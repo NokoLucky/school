@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <img
+        class="image"
+        src="assets/logo.png"
+        alt="Logo"
+        width="100"
+        height="60"
+      />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="back">
+
+  <!-- ✅ Language Heading -->
+  <div class="language-heading">
+    <ion-icon name="language-outline" class="language-icon"></ion-icon>
+    <h2>Yoruba Language Learning</h2>
+    <p class="language-subtitle">Explore visual and audio learning materials</p>
+  </div>
+
+  <!-- Beginner -->
+  <div class="rounded beginner" tappable routerLink="/yoruba-audio-beginner">
+    <ion-icon name="leaf-outline" class="icon"></ion-icon>
+    <p class="paragraph">Beginner Lessons</p>
+  </div>
+
+  <!-- Intermediate -->
+  <div class="rounded intermediate" tappable (click)="commingSoon()">
+    <ion-icon name="book-outline" class="icon"></ion-icon>
+    <p class="paragraph">Intermediate Lessons</p>
+  </div>
+
+  <!-- Advanced -->
+  <div class="rounded advanced" tappable (click)="commingSoon()">
+    <ion-icon name="trophy-outline" class="icon"></ion-icon>
+    <p class="paragraph">Advanced Lessons</p>
+  </div>
+
+</ion-content>

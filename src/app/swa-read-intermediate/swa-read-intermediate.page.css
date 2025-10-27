@@ -1,0 +1,106 @@
+/* BACKGROUND */
+.back {
+  --background: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Wrapper for vertical centering and confetti */
+.content-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* HEADER */
+.header-toolbar {
+  background-color: #ffcc00;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* LOGO */
+.image {
+  display: block;
+  margin: auto;
+  width: 120px;
+  height: auto;
+}
+
+/* COMING SOON CARD */
+.coming-soon-card {
+  background: linear-gradient(135deg, #ff66ff, #fad0c4);
+  border-radius: 20px;
+  padding: 30px 40px;
+  text-align: center;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  animation: bounce 1.5s ease infinite alternate;
+  color: #fff;
+  z-index: 1; /* keep card above confetti */
+  margin: 0 10px 
+}
+
+/* ICON */
+.coming-soon-card .icon {
+  font-size: 3em;
+  margin-bottom: 15px;
+}
+
+/* HEADING */
+.coming-soon-card h2 {
+  font-family: 'ComicSansCustom', cursive, sans-serif;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+/* PARAGRAPH */
+.coming-soon-card p {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+/* BOUNCE ANIMATION */
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* CONFETTI PARTICLES */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.8;
+  top: -20px;
+  animation: fall linear infinite;
+}
+
+.confetti1 { background-color: #ff5252; left: 10%; animation-duration: 3s; }
+.confetti2 { background-color: #ffeb3b; left: 30%; animation-duration: 4s; }
+.confetti3 { background-color: #4caf50; left: 50%; animation-duration: 3.5s; }
+.confetti4 { background-color: #2196f3; left: 70%; animation-duration: 4.2s; }
+.confetti5 { background-color: #9c27b0; left: 90%; animation-duration: 3.8s; }
+
+/* CONFETTI FALL ANIMATION */
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Toolbar min-height */
+ion-toolbar {
+  --min-height: 80px !important;
+}

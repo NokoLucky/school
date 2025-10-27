@@ -1,0 +1,122 @@
+/************************************
+ * GENERAL & HEADER
+ ************************************/
+ .back {
+    --background-color: #f5f5dc;  // Light cream background for a kid-friendly look
+  }
+  
+  .p1 {
+    color: #3a3a3a;
+    font-weight: bold;
+    font-size: 1.8em;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  ion-button.main-btn {
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 10px;
+    /* Main app colour */
+    --background: #ff66ff;
+    --background-activated: #ff66ff;
+    --background-focused: #ff66ff;
+  }
+  
+  ion-button.back-btn {
+    margin-top: 30px;
+    font-size: 1.2em;
+    --background: #ff66ff;
+    --background-activated: #ff66ff;
+    --background-focused: #ff66ff;
+    border-radius: 10px;
+  }
+  
+  /************************************
+   * OPTION CARDS (IMAGE + RADIO)
+   ************************************/
+  .option-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .option-card {
+    width: 150px;
+    background-color: #fff;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out, border 0.2s;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .option-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .option-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .option-radio {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .option-label {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-left: 5px;
+    color: #333;
+  }
+  
+  /* Correct selection: green border */
+  .success {
+    border: 3px solid #4caf50;
+  }
+  
+  /* Incorrect selection: red border */
+  .danger {
+    border: 3px solid red;
+  }
+  
+  /************************************
+   * COMPLETED TEMPLATE STYLING
+   ************************************/
+  .completed-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .completed-text {
+    color: #ff4081;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+  }
+  
+  .completed-animation {
+    width: 150px;
+    height: auto;
+    animation: spin 3s linear infinite;
+    margin-top: 20px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

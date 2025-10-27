@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <img class="image" src="assets/logo.png" alt="Logo" width="100" height="60" />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="back">
+  <!-- Lesson in progress -->
+  <!-- <ng-container *ngIf="!lessonCompleted; else completedTemplate">
+    <p class="p1">Choose the image containing "{{ targetLabel }}".</p>
+
+    <div class="image-grid">
+      <div *ngFor="let image of currentSet" class="imgContainer"
+           (click)="selectImage(image)"
+           [ngClass]="{'success': image.isCorrectSelection === true, 'danger': image.isCorrectSelection === false}">
+        <img [src]="image.src" height="130" width="130"/>
+      </div>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="!nextActive" (click)="onNext()" expand="block" class="main-btn">
+          Continue
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ng-container> -->
+
+  <!-- Lesson completed template -->
+  <ng-template #completedTemplate>
+    <div class="completed-container">
+      <p class="p1 completed-text">Awesome! You rocked it!</p>
+      <!-- Animation: replace with your own animated asset if desired -->
+      <img class="completed-animation" src="assets/animation/star.gif" alt="Celebration Animation"/>
+      <!-- Back button to return to the lessons list (eng-del2) -->
+      <ion-button routerLink="/eng-del2" expand="block" class="back-btn">Back to Lessons</ion-button>
+    </div>
+  </ng-template>
+</ion-content>

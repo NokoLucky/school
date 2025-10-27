@@ -1,0 +1,133 @@
+<!-- english-audio-list.page.html -->
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <img class="image" src="assets/logo.png" alt="Logo" width="100" height="60" />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-bg">
+  <ion-list *ngIf="!selectedLesson">
+    <ion-item button *ngFor="let lesson of lessons" (click)="selectLesson(lesson)" [class.active]="lesson === selectedLesson">
+      <ion-icon name="play-circle" slot="start"></ion-icon>
+      <ion-label>{{ lesson.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="selectedLesson" class="video-container">
+    <ion-button fill="clear" (click)="clearSelection()" class="back-btn">
+      <ion-icon name="arrow-back"></ion-icon>
+      <span>Back</span>
+    </ion-button>
+
+    <div class="iframe-wrapper">
+      <iframe [src]="selectedUrl" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <ion-card class="lesson-card">
+      <ion-card-content>
+        Now playing: <strong>{{ selectedLesson.name }}</strong>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<!-- <ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <img class="logo" src="assets/logo.png" alt="Logo" />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="content-bg">
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="bouncing-emojis">
+      <div class="emoji">🎵</div>
+      <div class="emoji">🎧</div>
+      <div class="emoji">🎤</div>
+    </div>
+    <div class="loading-message">
+      Loading your learning goodies! <br> Get ready to listen in... {{ countdown }}!
+    </div>
+    <div class="progress-dots">
+      <div class="dot" [class.active]="dot === currentDot" *ngFor="let dot of [1,2,3]"></div>
+    </div>
+  </div>
+
+  <div *ngIf="showError" class="error-message">
+    <img src="assets/sad-cloud.png" class="error-image">
+    <h2>Oh no! The music got lost! 🎹</h2>
+    <ion-button (click)="loadPlaylist()" class="retry-button">
+      Try Again!
+    </ion-button>
+  </div>
+
+ 
+  <ion-list class="track-list" *ngIf="!isLoading && !showError">
+    <ion-item *ngFor="let track of playlist" 
+              (click)="playTrack(track)" 
+              [class.active]="track === activeTrack">
+      <ion-icon name="musical-notes" slot="start" class="track-icon"></ion-icon>
+      <ion-label class="track-label">
+        {{ track.name }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+
+
+<ion-footer *ngIf="activeTrack">
+  <ion-toolbar class="footer-toolbar">
+
+    <div class="active-track-name">
+      {{ activeTrack.name }}
+    </div>
+
+  
+    <ion-range 
+      #range 
+      [(ngModel)]="progress" 
+      max="100" 
+      (touchend)="seek()" 
+      (mouseup)="seek()"
+      class="audio-range"
+    ></ion-range>
+
+   
+    <div class="controls">
+      <div>
+        <ion-button style="height: 50px;" fill="clear" (click)="prev()" color="light">
+          <img src="assets/back.png" style="width: 40px;"/>
+        </ion-button>
+      </div>
+  
+      <div>
+        <ion-button style="height: 50px;" fill="clear" (click)="togglePlayer(false)" *ngIf="!isPlaying" color="light">
+          <img src="assets/play.png" style="width: 40px;"/>
+        </ion-button>
+  
+        <ion-button style="height: 50px;" fill="clear" (click)="togglePlayer(true)" *ngIf="isPlaying" color="light">
+          <img src="assets/pause.png" style="width: 40px;"/>
+        </ion-button>
+      </div>
+  
+      <div>
+        <ion-button style="height: 50px;" fill="clear" (click)="next()">
+          <img src="assets/forward.png" style="width: 40px;"/>
+        </ion-button>
+      </div>
+  
+    </div>
+  </ion-toolbar>
+</ion-footer> -->

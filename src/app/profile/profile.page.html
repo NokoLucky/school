@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <img class="image" src="assets/logo.png" alt="Logo" width="100" height="60" />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-bg">
+  <div class="profile-container">
+    
+    <!-- User Info Card -->
+    <div class="user-card">
+      <div class="avatar-section">
+        <ion-avatar class="user-avatar">
+          <img [src]="user?.photoURL || 'assets/avatar.png'" alt="Profile" />
+        </ion-avatar>
+        <div class="user-info">
+          <p class="user-email">{{ user?.email }}</p>
+          <p class="join-date">Member since {{ joinDate }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Actions -->
+    <ion-list class="actions-list">
+      
+      <!-- Account Settings -->
+      <ion-list-header>
+        <ion-label>Account Settings</ion-label>
+      </ion-list-header>
+
+      <ion-item button (click)="editProfile()" class="action-item">
+        <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+        <ion-label>Edit Profile</ion-label>
+      </ion-item>
+
+      <ion-item button (click)="changePassword()" class="action-item">
+        <ion-icon slot="start" name="lock-closed-outline" color="primary"></ion-icon>
+        <ion-label>Change Password</ion-label>
+      </ion-item>
+
+      <ion-item button (click)="viewProgress()" class="action-item">
+        <ion-icon slot="start" name="bar-chart-outline" color="primary"></ion-icon>
+        <ion-label>Learning Progress</ion-label>
+        <ion-badge slot="end" color="success">New</ion-badge>
+      </ion-item>
+
+      <!-- App Settings -->
+      <ion-list-header>
+        <ion-label>App Settings</ion-label>
+      </ion-list-header>
+
+      <ion-item button (click)="toggleNotifications()" class="action-item">
+        <ion-icon slot="start" name="notifications-outline" color="primary"></ion-icon>
+        <ion-label>Notifications</ion-label>
+        <ion-toggle slot="end" [checked]="notificationsEnabled"></ion-toggle>
+      </ion-item>
+
+      <ion-item button (click)="changeLanguage()" class="action-item">
+        <ion-icon slot="start" name="language-outline" color="primary"></ion-icon>
+        <ion-label>App Language</ion-label>
+        <ion-note slot="end">English</ion-note>
+      </ion-item>
+
+      <ion-item button (click)="contactSupport()" class="action-item">
+        <ion-icon slot="start" name="help-circle-outline" color="primary"></ion-icon>
+        <ion-label>Help & Support</ion-label>
+      </ion-item>
+
+      <!-- Legal -->
+      <ion-list-header>
+        <ion-label>Legal</ion-label>
+      </ion-list-header>
+
+      <ion-item button (click)="viewPrivacyPolicy()" class="action-item">
+        <ion-icon slot="start" name="shield-checkmark-outline" color="primary"></ion-icon>
+        <ion-label>Privacy Policy</ion-label>
+      </ion-item>
+
+      <ion-item button (click)="viewTerms()" class="action-item">
+        <ion-icon slot="start" name="document-text-outline" color="primary"></ion-icon>
+        <ion-label>Terms of Service</ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <!-- Logout Button -->
+    <div class="logout-section">
+      <ion-button 
+        (click)="logout()" 
+        expand="block" 
+        color="danger" 
+        class="logout-btn">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Log Out
+      </ion-button>
+      
+      <p class="app-version">ExtraLingual v1.0.0</p>
+    </div>
+
+  </div>
+</ion-content>

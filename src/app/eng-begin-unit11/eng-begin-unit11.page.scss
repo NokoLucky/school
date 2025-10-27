@@ -1,0 +1,44 @@
+.jobDivs
+{
+    margin: 0 10px  0 10px;
+    background-color: lightgrey;
+    height: 50px;
+    
+}
+
+.headings
+{
+    font-size: 1.1em;
+    font-weight: 400;
+}
+
+.back
+{
+  --background-color: grey;
+}
+
+.paragraph
+{
+    line-height: 50px;
+    font-size: medium;
+    text-align: center;
+}
+
+.cell-class {
+    border-color: black; 
+    border-width: .01em; 
+    border-style:solid; margin-bottom : -1px;
+    background-color: rgb(247, 247, 247)
+  }
+
+  .image
+    {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    ion-toolbar{
+        --min-height:80px!important;
+      }
+

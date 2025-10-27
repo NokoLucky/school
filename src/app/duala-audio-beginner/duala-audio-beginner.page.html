@@ -1,0 +1,163 @@
+<!-- bassa-audio-beginner.page.html -->
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <img class="image" src="assets/logo.png" alt="Logo" width="100" height="60" />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-bg">
+  <!-- Show lessons list only when PDF viewer is NOT visible -->
+  <div *ngIf="!showPdfViewer">
+    <!-- 🎧 Page Description -->
+    <div class="language-heading ion-text-center">
+      <ion-icon name="book-musical-outline" class="language-icon"></ion-icon>
+      <h2>Duala Beginner Lessons</h2>
+      <p class="language-subtitle">
+        Listen to audio lessons while following along with the reading materials.
+      </p>
+    </div>
+
+    <!-- ⚠️ Error State -->
+    <div *ngIf="error && !isLoading" class="ion-text-center ion-padding">
+      <ion-icon name="alert-circle-outline" size="large" color="danger"></ion-icon>
+      <p>{{ error }}</p>
+      <ion-button (click)="retryLoading()" fill="outline" color="primary">
+        Try Again
+      </ion-button>
+    </div>
+
+    <!-- ⏳ Loading Spinner -->
+    <div *ngIf="isLoading" class="spinner-wrapper ion-text-center">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p class="spinner-text">Loading lessons...</p>
+    </div>
+
+    <!-- Lessons List -->
+    <div *ngIf="!isLoading && !error && playlist.length > 0" class="lessons-section">
+      <h3 class="section-title">Lessons</h3>
+      
+      <ion-list>
+        <ion-item
+          *ngFor="let track of playlist"
+          tappable
+          (click)="track.isDocumentOnly ? openDocument(track) : start(track)"
+          [class.active]="track === activeTrack"
+          class="track-item"
+          [disabled]="track.loading"
+        >
+          <ion-spinner 
+            *ngIf="track.loading" 
+            slot="start" 
+            name="crescent" 
+            color="primary"
+          ></ion-spinner>
+          
+          <div *ngIf="!track.loading" slot="start" class="lesson-icon">
+            <ion-icon
+              [name]="track.isDocumentOnly ? 'document-outline' : 'musical-notes-outline'"
+              [color]="track.isDocumentOnly ? 'medium' : 'danger'"
+            ></ion-icon>
+          </div>
+          
+          <ion-label class="track-label">
+            <div class="track-name-row">
+              <strong class="lesson-name">{{ track.name }}</strong>
+              <span *ngIf="track.hasDocument" class="doc-badge">
+                <ion-icon name="book-outline"></ion-icon> 
+                {{ track.isDocumentOnly ? 'Document Only' : 'Document Available' }}
+              </span>
+              <span *ngIf="!track.hasDocument" class="no-doc-badge">
+                <ion-icon name="document-outline"></ion-icon> No Document
+              </span>
+            </div>
+            <p *ngIf="track.loading" class="loading-text">Loading audio...</p>
+            
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- 🚫 Empty State -->
+    <div *ngIf="!isLoading && !error && playlist.length === 0" class="ion-text-center ion-padding">
+      <p>No lessons available.</p>
+    </div>
+  </div>
+
+  <!-- PDF Viewer - Takes full screen when active -->
+  <div *ngIf="showPdfViewer" class="fullscreen-pdf-section">
+    <div class="pdf-header">
+      <h3>{{ currentPdfName }}</h3>
+      <div class="pdf-controls">
+       
+        <ion-button fill="clear" size="small" (click)="closePdfViewer()" color="medium">
+          <ion-icon name="close" slot="start"></ion-icon>
+          Close
+        </ion-button>
+      </div>
+    </div>
+    
+    <div class="pdf-container" #pdfViewer>
+      <div *ngIf="isPdfLoading" class="pdf-loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Loading document...</p>
+      </div>
+      <iframe 
+        #pdfIframe
+        *ngIf="currentPdfUrl && !isPdfLoading"
+        [src]="currentPdfUrl" 
+        class="pdf-iframe"
+        frameborder="0"
+        (load)="isPdfLoading = false" 
+      ></iframe>
+    </div>
+  </div>
+</ion-content>
+
+<!-- 🎵 Player Controls - Only show for audio tracks -->
+<ion-footer *ngIf="activeTrack && !activeTrack.isDocumentOnly" class="slide-up-footer">
+  <ion-toolbar color="danger">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <strong>{{ activeTrack.name }}</strong>
+          <p *ngIf="currentPdfName && showPdfViewer" class="now-playing-pdf">📖 {{ currentPdfName }}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-range
+            #range
+            [(ngModel)]="progress"
+            max="100"
+            color="light"
+            (ionChange)="seek()"
+          ></ion-range>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="player-controls">
+      <ion-button fill="clear" (click)="prev()" color="light" [disabled]="!activeTrack">
+        <img src="assets/back.png" class="control-icon" />
+      </ion-button>
+
+      <ion-button fill="clear" (click)="togglePlayer(false)" *ngIf="!isPlaying" color="light">
+        <img src="assets/play.png" class="control-icon" />
+      </ion-button>
+
+      <ion-button fill="clear" (click)="togglePlayer(true)" *ngIf="isPlaying" color="light">
+        <img src="assets/pause.png" class="control-icon" />
+      </ion-button>
+
+      <ion-button fill="clear" (click)="next()" color="light" [disabled]="!activeTrack">
+        <img src="assets/forward.png" class="control-icon" />
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

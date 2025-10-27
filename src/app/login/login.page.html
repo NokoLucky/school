@@ -1,0 +1,59 @@
+<ion-content class="back">
+  <div class="cn">
+    <div class="inner">
+      <img src="assets/logo.png" alt="Logo" class="logo" />
+      <br/><br/>
+      
+      <form (ngSubmit)="login()">
+        <ion-item class="rounded" lines="none">
+          <ion-input 
+            type="email" 
+            placeholder="Email"
+            [(ngModel)]="email" 
+            name="email"
+            required>
+          </ion-input>
+        </ion-item>
+        <br/>
+        <ion-item class="rounded" lines="none">
+          <ion-input 
+            type="password" 
+            placeholder="Password"
+            [(ngModel)]="password" 
+            name="password"
+            required>
+          </ion-input>
+        </ion-item>
+        <br/>
+       
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" color="danger" expand="block" class="login-btn">Sign In</ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <!-- Google Login Button -->
+      <ion-button 
+        (click)="loginWithGoogle()" 
+        color="light" 
+        expand="block"
+        class="google-btn">
+        <ion-icon slot="start" name="logo-google" color="danger"></ion-icon>
+        Sign in with Google
+      </ion-button>
+
+      <!-- Register Link -->
+      <div class="register-link">
+        <p>Don't have an account? 
+          <a routerLink="/register" class="link">Sign up</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</ion-content>

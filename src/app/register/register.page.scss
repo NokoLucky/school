@@ -1,0 +1,115 @@
+.back {
+  --background: url('/assets/login-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.cn {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner {
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.logo {
+  max-width: 100%;
+  height: auto;
+}
+
+ion-input {
+  color: #fff;
+  input::placeholder {
+    color: #fff;
+  }
+}
+
+.rounded {
+  border-radius: 50px;
+  --ion-item-background: rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s ease;
+  
+  &:focus-within {
+    --ion-item-background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.divider {
+  margin: 20px 0;
+  position: relative;
+  text-align: center;
+  
+  span {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0 15px;
+    color: white;
+    font-size: 14px;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: -1;
+  }
+}
+
+.register-btn {
+  --border-radius: 50px;
+}
+
+.google-btn {
+  --border-radius: 50px;
+  margin-bottom: 15px;
+}
+
+.login-link, .register-link {
+  margin-top: 20px;
+  
+  p {
+    color: white;
+    margin: 0;
+  }
+  
+  .link {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-weight: bold;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding: 40px;
+  }
+}

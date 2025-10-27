@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    build: .
+    working_dir: /app
+    
+    ports:
+      - "8100:8100"  # Expose port 8100 for Ionic app access
+      - "5037:5037"  # Expose port for ADB communication (important for connecting to the emulator)
+    command: ["ionic", "serve", "--host=0.0.0.0", "--port=8100", "--external"]
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - .:/app  # Bind mount your app folder to the container
+    networks:
+      - android_network  # Add a custom network for communication between container and host
+
+networks:
+  android_network:
+    driver: bridge

@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="dark">
+      </ion-back-button>
+   </ion-buttons>
+   <ion-title><img class="image" src="assets/logo.png" width="100" height="60"/></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="back">
+
+  <div class="jobDivs" tappable  routerLink="/english">
+    <p class="paragraph">1. At the restaurant / au restaurant</p>
+  </div><br/>
+
+  <ion-grid>
+    <ion-row *ngFor="let item of data; index as i">
+      <ion-col class="cell-class" size="6">
+        {{ item.field1 }}
+      </ion-col>
+      <ion-col class="cell-class" size="6">
+        {{ item.field2 }}
+      </ion-col> 
+    </ion-row>
+  </ion-grid>
+<br/>
+  
+    Exemples
+    <ul>
+    <li>Do you have a reservation?  <span style="font-weight: bold;">- Avez-vous une réservation?</span> </li>
+    <li>We need a table for four people  <span style="font-weight: bold;">- Nous avons besoin d'une table pour quatre personnes.</span> </li>
+    <li>Can I take your order please?  <span style="font-weight: bold;">- Puis-je prendre votre commande, s'il vous plaît?</span> </li>
+    <li>I would like to order a starter. <span style="font-weight: bold;">- apportez-moi un verre de vin, s’il vous plait</span> </li>
+    <li>I would like chips as a side dish please. <span style="font-weight: bold;">- je voudrais des frites comme plat d'accompagnement, s'il vous plaît.</span> </li>
+    <li>Do you have chocolate desserts?  <span style="font-weight: bold;">- Avez-vous des desserts au chocolat?</span> </li>
+    <li>Can I have the bill please?  <span style="font-weight: bold;">- Puis-je avoir l’addition, s'il vous plaît?</span> </li>
+    <li>I am going to give the waiter a 20% tip.<span style="font-weight: bold;">- Je vais donner 20% de pourboire au serveur</span> </li>
+    </ul>
+
+    <div class="jobDivs" tappable  routerLink="/english">
+      <p class="paragraph">2.  L’impératif</p>
+    </div><br/>
+
+    <p>L’impératif est utilisé pour donner un ordre ou un conseil. Les verbes à l'impératif
+       ne se conjuguent qu'à trois personnes La 2e personne du singulier et les 1re et 2e personnes du pluriel 
+       (tu, nous, vous /you, we, you)</p>
+
+       <ul>
+        <li>To succeed in life, listen to your father and mother (advice)   <span style="font-weight: bold;">- Pour réussir dans la vie, écoute ton père et ta mère (conseil)</span> </li>
+        <li>Put some water in the pot and boil 10 minutes (advice)   <span style="font-weight: bold;">- Mettez de l’eau dans la marmite et laissez bouillir 10 minutes (conseil)</span> </li>
+        <li>Get out of my office (order)   <span style="font-weight: bold;">- Sortez de mon bureau (ordre)</span> </li>
+        <li>Shut up (order)  <span style="font-weight: bold;">- Tais-toi (ordre)</span> </li>
+      </ul>
+  
+    <ion-grid>
+      <ion-row *ngFor="let item of data1; index as i">
+        <ion-col class="cell-class" size="6">
+          {{ item.secfield1 }}
+        </ion-col>
+        <ion-col class="cell-class" size="6">
+          {{ item.secfield2 }}
+        </ion-col> 
+      </ion-row>
+    </ion-grid>
+ <br/>
+
+
+    <div class="jobDivs" tappable  routerLink="/english">
+      <p class="paragraph">3. Les adverbes de temps</p>
+    </div><br/>
+
+    <p>Ce sont les mots invariables qui indiquent le temps, le moment. </p>	
+
+    <ul>
+      <li>Mary will come tomorrow <span style="font-weight: bold;">- Marie viendra demain</span> </li>
+      <li>Before she lived here  <span style="font-weight: bold;">- Avant, elle vivait ici</span> </li>
+      <li>In the morning I get up early    <span style="font-weight: bold;">- Le matin je me lève tôt</span> </li>
+    </ul>
+  
+    <ion-grid>
+      <ion-row *ngFor="let item of data2; index as i">
+        <ion-col class="cell-class" size="6">
+          {{ item.thrfield1 }}
+        </ion-col>
+        <ion-col class="cell-class" size="6">
+          {{ item.thrfield2 }}
+        </ion-col> 
+      </ion-row>
+    </ion-grid>
+ <br/>
+
+ Exemples
+    <ul>
+    <li>I would like to speak French but I have a lot of trouble. <span style="font-weight: bold;">- J’aimerais parler français mais j’ai beaucoup de mal.</span> </li>
+    <li>Do you take a fruit juice or a cup of tea? <span style="font-weight: bold;">- Prendrez-vous un jus de fruit ou une tasse de thé ?</span> </li>
+    <li>Young people and children love this singer. <span style="font-weight: bold;">- Les jeunes et les enfants aiment ce chanteur.</span> </li>
+    <li>I'm invited, so I'll go to the party. <span style="font-weight: bold;">- Je suis invité, donc j’irai à la fête.</span> </li>
+    <li>I like him a lot, but he does not know it. <span style="font-weight: bold;">- Je l’aime beaucoup, or il ne le sait pas.</span> </li>
+    <li>He does not like rice or pasta <span style="font-weight: bold;">- Il n’aime ni le riz, ni les pâtes.</span> </li>
+    <li>He speaks loudly because the students are chatting. <span style="font-weight: bold;">- Il parle fort, car les élèves bavardent.</span> </li>
+    </ul>
+
+  
+
+
+</ion-content>
+

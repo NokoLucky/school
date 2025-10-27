@@ -1,27 +1,114 @@
-#container {
-  text-align: center;
+// 🎨 Background with transparency
+.home-bg {
+  background: url("/assets/kids-bg.jpg") no-repeat center center/cover !important;
+  position: relative;
+  height: 100%;
+}
 
+ion-toolbar {
+  --min-height: 80px !important;
+}
+
+
+.profile-icon {
+  font-size: 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  cursor: pointer;
+}
+
+
+/* 🖼️ Logo Styling */
+.image {
+  display: block;
+  margin: auto;
+  width: 120px;
+  height: auto;
+}
+
+/* Add a semi-transparent overlay */
+.home-bg::before {
+  content: "";
   position: absolute;
+  top: 0;
   left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* 70% dark overlay */
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+/* Ensure the content is above the overlay */
+ion-content.home-bg {
+  --background: transparent;
+  position: relative;
+  z-index: 1;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+/* 🛠️ Header Styling */
+.header-toolbar {
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#container a {
-  text-decoration: none;
+/* 🏠 Logo Styling */
+.logo {
+  display: block;
+  margin: auto;
+  width: 120px;
+  height: auto;
 }
+
+/* ✨ Title */
+.center {
+  font-weight: bold;
+  font-size: 1.8em;
+  text-align: center;
+  color: #fae902;
+  font-family: 'ComicSansCustom', cursive, sans-serif;
+  margin-top: 20px;
+}
+
+////////////////////////////////////////////////////////////////////////////
+/// 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.subject {
+  aspect-ratio: 1 / 1;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.subject:hover {
+  transform: scale(1.08);
+  box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.lbl {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+  font-family: 'ComicSansCustom', cursive, sans-serif;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Colors */
+.bassa { background-color: #cc99ff; }
+.duala { background-color: #ff8282; }
+.french { background-color: #66ccff; }
+.portuguese { background-color: #ff6666; }
+.hausa { background-color: #ff9966; }
+.spanish { background-color: #ffcc66; }
+.swahili { background-color: #66ff66; }
+.wolof { background-color: #8766ff; }
+.yoruba { background-color: #ff7866; }
+

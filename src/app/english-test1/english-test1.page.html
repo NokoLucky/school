@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title>Test 1</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div class="toplbl">
+  <label>1/15</label>
+</div>
+  
+<p style="background-color: rgb(187, 209, 187);"> 
+  <span class="center">What is the SUBJECT in each of the following sentences?</span><br/><br/>
+    
+    <span class="middleText">They went to school on the bus</span>
+  </p>
+  
+  <ion-radio-group>
+
+    <ion-item lines="none">
+      <ion-radio mode="md" item-left value="went"></ion-radio>&nbsp;&nbsp;
+      <ion-label style="font-size:small;">went</ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-radio mode="md" item-left value="school"></ion-radio>&nbsp;&nbsp;
+      <ion-label style="font-size:small;">school</ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-radio mode="md" item-left value="they"></ion-radio>&nbsp;&nbsp;
+      <ion-label style="font-size:small;">they</ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-radio mode="md" item-left value="bus"></ion-radio>&nbsp;&nbsp;
+      <ion-label style="font-size:small;">bus</ion-label>
+    </ion-item>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-button routerLink="/home" type="submit" color="success" expand="block">Evaluate</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button routerLink="/home" type="submit" color="light" expand="block">Check Answer</ion-button>
+      </ion-col>
+    </ion-row>
+
+   
+</ion-radio-group>   
+
+</ion-content>

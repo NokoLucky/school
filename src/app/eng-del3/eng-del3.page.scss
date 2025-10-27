@@ -1,0 +1,59 @@
+.jobDivs
+{
+    margin: 0 10px  0 10px;
+    background-color: lightgrey;
+    height: 50px;
+    
+}
+
+.headings
+{
+    font-size: 1.1em;
+    font-weight: 400;
+}
+
+.back
+{
+  --background-color: grey;
+}
+
+.paragraph
+{
+    line-height: 50px;
+    margin-left: 5px;
+    font-size: 1.5em;
+    font-weight: 400;
+    text-align: center;
+}
+
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 35%;
+}
+.fill img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+
+.rounded
+{
+  border-radius: 10px 10px 10px 10px;
+  margin: 0 10px  0 10px;
+  background-color: white;
+  text-align: center;
+}
+
+ion-toolbar{
+    --min-height:80px!important;
+  }
+
+.p1
+{
+    color: gray;
+    font-weight: bolder;
+    font-size: 2em;
+}

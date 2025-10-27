@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="dark">
+      </ion-back-button>
+   </ion-buttons>
+<ion-title><img class="image" src="assets/logo.png" width="100" height="60"/></ion-title>
+  </ion-toolbar>
+</ion-header> 
+
+
+<ion-content class="back">
+<p class="p1">Choose image containing "map".</p>
+
+    <div class="imgContainer">
+      <img src="assets/Travelling/ticket.png" height="130" width="130"/>
+    </div>
+
+    <div class="imgContainer">
+      <img src="assets/Travelling/passport.png" height="130" width="130"/>
+    </div><br/><br/>
+
+    <div class="imgContainer">
+      <img src="assets/Travelling/location.png" height="130" width="130"/>
+    </div>
+
+    <div class="imgContainer" (click)="chooseMap()" [ngClass]="status ? 'success' : 'danger'">
+      <img src="assets/Travelling/map.png" height="130" width="130"/>
+    </div>
+  
+    <br/><br/>
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="choose === ''" routerLink="/eng-del3" type="submit" color="danger" expand="block">Continue</ion-button>
+      </ion-col>
+    </ion-row>
+
+
+</ion-content>

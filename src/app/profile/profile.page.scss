@@ -1,0 +1,174 @@
+ion-toolbar {
+  --min-height: 80px !important;
+}
+
+.header-toolbar {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+  display: block;
+  margin: auto;
+  width: 120px;
+  height: auto;
+}
+
+
+.profile-bg {
+  --background: url('/assets/kids-bg2.jpg') no-repeat center center/cover !important;
+  position: relative;
+}
+
+.profile-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+ion-content.profile-bg {
+  --background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-container {
+  padding: 16px;
+}
+
+// User Card
+.user-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  border: 4px solid #ffcc00;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  margin: 0 0 4px 0;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #333;
+  font-family: 'ComicSansCustom', cursive, sans-serif;
+}
+
+.user-email {
+  margin: 0 0 4px 0;
+  color: #666;
+  font-size: 0.9em;
+}
+
+.join-date {
+  margin: 0;
+  color: #888;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+// Actions List
+.actions-list {
+  background: transparent;
+  margin-bottom: 20px;
+}
+
+ion-list-header {
+  --background: transparent;
+  margin-top: 10px;
+  
+  ion-label {
+    font-weight: bold;
+    color: white;
+    font-size: 1.1em;
+    font-family: 'ComicSansCustom', cursive, sans-serif;
+  }
+}
+
+.action-item {
+  --background: rgba(255, 255, 255, 0.95);
+  --border-radius: 12px;
+  margin-bottom: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  
+  ion-label {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  ion-note {
+    color: #666;
+  }
+}
+
+// Logout Section
+.logout-section {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.logout-btn {
+  --border-radius: 50px;
+  --box-shadow: 0 4px 16px rgba(244, 67, 54, 0.3);
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+.app-version {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8em;
+  margin: 0;
+}
+
+// Animations
+.user-card, .action-item {
+  animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive Design
+@media (min-width: 768px) {
+  .profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .user-card {
+    padding: 30px;
+  }
+}

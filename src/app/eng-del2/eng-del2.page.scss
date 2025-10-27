@@ -1,0 +1,67 @@
+/************************************
+ * HEADER
+ ************************************/
+ .header-toolbar {
+  background-color: #ff66ff; 
+  --min-height: 80px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+  display: block;
+  margin: auto;
+  width: 120px;
+  height: auto;
+}
+
+/************************************
+ * CONTENT
+ ************************************/
+.content-bg {
+  /* Use a light gradient for a friendly background */
+  background: linear-gradient(135deg, #ffefba, #ffffff);
+  padding: 10px;
+}
+
+.p1 {
+  color: black;
+  font-weight: bold;
+  font-size: 2em;
+  text-align: center;
+  font-family: 'ComicSansCustom', cursive, sans-serif;
+  margin: 20px 0;
+}
+
+/* Lesson buttons */
+.rounded {
+  border-radius: 15px;
+  margin: 10px;
+  background-color: #fff3cd;  /* Kid-friendly pastel background */
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  font-family: 'ComicSansCustom', cursive, sans-serif;
+}
+
+.rounded:hover {
+  transform: scale(1.03);
+  background-color: #ffe9a0;
+}
+
+.lesson-label {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: black;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/************************************
+ * GLOBAL OVERRIDES
+ ************************************/
+ion-toolbar {
+  --min-height: 80px !important;
+}

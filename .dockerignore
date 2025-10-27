@@ -1,0 +1,25 @@
+# Ignore dependencies and build files
+node_modules
+platforms
+plugins
+www
+
+# Ignore system & editor files
+.DS_Store
+.idea
+.vscode
+*.log
+
+# Ignore large project data (modify as needed)
+data/
+uploads/
+storage/
+backup/
+media/
+*.zip
+*.tar
+*.mp4
+*.mp3
+*.iso
+*.m4a
+

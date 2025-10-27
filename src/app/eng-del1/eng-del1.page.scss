@@ -1,0 +1,67 @@
+// 🎨 Background and Colors
+.back {
+  background-color: #f8f8f8;
+}
+
+// 🖼️ Header Toolbar
+.header-toolbar {
+  background-color: #ffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// 🖼️ Logo Styling
+.image {
+  display: block;
+  margin: auto;
+  width: 120px;
+  height: auto;
+}
+
+// ⚡ Center content vertically
+.center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+}
+
+// 🔘 Rounded Button / Image Container
+.rounded {
+  border-radius: 15px;
+  margin: 20px 10px;
+  padding: 15px;
+  background-color: #ffeb3b;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease;
+  animation: none; // Initially no animation
+}
+
+// Bounce effect on hover
+.rounded:hover {
+  animation: bounce 1s ease 1;
+  transform: scale(1.05);
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(-10px); }
+  40% { transform: translateY(5px); }
+  60% { transform: translateY(-5px); }
+  80% { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
+// Image inside rounded container
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+// 🔧 Toolbar customization
+ion-toolbar {
+  --min-height: 80px !important;
+}
