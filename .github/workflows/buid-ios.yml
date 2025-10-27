@@ -39,24 +39,40 @@ jobs:
       - name: Build Development IPA
         run: |
           cd ios/App
-          rm -rf build
+          rm -rf build Payload
           
-          # Build directly as development IPA
+          # Build with explicit code signing disabled for the build phase
           xcodebuild -workspace App.xcworkspace \
             -scheme App \
             -configuration Debug \
             -destination 'generic/platform=iOS' \
             -derivedDataPath Build \
-            DEVELOPMENT_TEAM="" \
-            CODE_SIGNING_ALLOWED=YES \
-            CODE_SIGN_STYLE="Manual" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
             build
 
-          # Create IPA from the built app
+          # Create IPA manually
           mkdir -p Payload
-          cp -r Build/Build/Products/Debug-iphoneos/App.app Payload/
+          mkdir -p build
+          
+          # Find the .app file (path might vary)
+          if [ -d "Build/Build/Products/Debug-iphoneos/App.app" ]; then
+            cp -r Build/Build/Products/Debug-iphoneos/App.app Payload/
+          elif [ -d "Build/Products/Debug-iphoneos/App.app" ]; then
+            cp -r Build/Products/Debug-iphoneos/App.app Payload/
+          else
+            echo "Looking for .app file..."
+            find Build -name "*.app" -type d
+            exit 1
+          fi
+          
+          # Create IPA
           zip -r build/App.ipa Payload
           rm -rf Payload
+          
+          echo "IPA created at: ios/App/build/App.ipa"
+          ls -la build/
 
       - name: Upload IPA for Sideloadly
         uses: actions/upload-artifact@v4
