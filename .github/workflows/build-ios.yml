@@ -19,7 +19,8 @@ jobs:
       - name: Install Ionic and dependencies
         run: |
           npm install -g @ionic/cli
-          npm ci
+          npm install --legacy-peer-deps
+
 
       - name: Build Ionic app
         run: |
