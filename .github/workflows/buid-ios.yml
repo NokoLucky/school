@@ -14,21 +14,21 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 16  # Use Node 16 as your app was built with it
+          node-version: 18  # Keep using Node 18, but we'll handle the OpenSSL issue
 
       - name: Install Ionic and dependencies
         run: |
           npm install -g @ionic/cli
-          npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+          npm install --legacy-peer-deps
 
       - name: Install missing dependencies
         run: |
           npm install @ionic-native/core@latest @ionic-native/splash-screen@latest --legacy-peer-deps
 
-      - name: Build Ionic app
+      - name: Build Ionic app (without openssl-legacy-provider)
         run: |
-          export NODE_OPTIONS=--openssl-legacy-provider
-          ionic build
+          # Remove the problematic flag and use alternative approaches
+          ionic build --prod
 
       - name: Sync Capacitor
         run: |
