@@ -21,6 +21,10 @@ jobs:
           npm install -g @ionic/cli
           npm install --legacy-peer-deps
 
+      - name: Build Ionic app
+        run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          ionic build
 
       - name: Build Ionic app
         run: |
