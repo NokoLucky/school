@@ -1,0 +1,57 @@
+name: Build iOS (Unsigned IPA)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Ionic and dependencies
+        run: |
+          npm install -g @ionic/cli
+          npm ci
+
+      - name: Build Ionic app
+        run: |
+          ionic build
+          npx cap sync ios
+
+      - name: Build iOS archive (unsigned)
+        run: |
+          cd ios/App
+          # Create an export options plist for an unsigned archive
+          cat <<EOF > exportOptions.plist
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key><string>development</string>
+              <key>signingStyle</key><string>manual</string>
+              <key>compileBitcode</key><false/>
+          </dict>
+          </plist>
+          EOF
+
+          xcodebuild -scheme App -configuration Release -sdk iphoneos \
+            -archivePath build/App.xcarchive archive CODE_SIGNING_ALLOWED=NO
+
+          xcodebuild -exportArchive \
+            -archivePath build/App.xcarchive \
+            -exportOptionsPlist exportOptions.plist \
+            -exportPath build
+
+      - name: Upload unsigned IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-unsigned-ipa
+          path: ios/App/build/**/*.ipa
