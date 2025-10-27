@@ -14,24 +14,25 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 16  # Use Node 16 as your app was built with it
 
       - name: Install Ionic and dependencies
         run: |
           npm install -g @ionic/cli
-          npm install --legacy-peer-deps
+          npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+
+      - name: Install missing dependencies
+        run: |
+          npm install @ionic-native/core@latest @ionic-native/splash-screen@latest --legacy-peer-deps
 
       - name: Build Ionic app
         run: |
           export NODE_OPTIONS=--openssl-legacy-provider
           ionic build
 
-      - name: Build Ionic app
+      - name: Sync Capacitor
         run: |
-          npm install @ionic-native/core@latest --legacy-peer-deps
-          ionic build
           npx cap sync ios
-
 
       - name: Build iOS archive (unsigned)
         run: |
