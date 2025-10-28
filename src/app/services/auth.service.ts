@@ -20,38 +20,32 @@ export class AuthService {
     private toastCtrl: ToastController  // Add this
   ) {}
 
-  // Helper method for debug toasts
-  private async showDebugToast(message: string) {
-    const toast = await this.toastCtrl.create({
-      message: `DEBUG: ${message}`,
-      duration: 3000,
-      position: 'bottom',
-      color: 'secondary'
-    });
-    await toast.present();
-  }
+  // // Helper method for debug toasts
+  // private async showDebugToast(message: string) {
+  //   const toast = await this.toastCtrl.create({
+  //     message: `DEBUG: ${message}`,
+  //     duration: 3000,
+  //     position: 'bottom',
+  //     color: 'secondary'
+  //   });
+  //   await toast.present();
+  // }
 
   // Email/Password Registration
   async register(email: string, password: string): Promise<any> {
-    await this.showDebugToast('Step 1: Starting registration');
     
     try {
-      await this.showDebugToast('Step 2: Calling createUserWithEmailAndPassword');
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await this.showDebugToast('Step 3: Registration successful!');
       return { success: true, user: userCredential.user };
     } catch (error: any) {
-      await this.showDebugToast(`Step 4: Error: ${error.code}`);
       return { success: false, error: this.getFriendlyErrorMessage(error.code) };
     }
   }
 
   // Email/Password Login
   async loginWithGoogle(): Promise<any> {
-    await this.showDebugToast('Step 1: Starting Google login');
     
     try {
-      await this.showDebugToast('Step 2: Creating Google provider');
       const provider = new GoogleAuthProvider();
       
       // Set custom parameters
@@ -59,7 +53,6 @@ export class AuthService {
         prompt: 'select_account'
       });
       
-      await this.showDebugToast('Step 3: Calling signInWithPopup');
       
       // Add a timeout to prevent hanging
       const loginPromise = signInWithPopup(auth, provider);
@@ -69,7 +62,6 @@ export class AuthService {
       
       const userCredential = await Promise.race([loginPromise, timeoutPromise]) as any;
       
-      await this.showDebugToast('Step 4: Google login successful!');
       return { success: true, user: userCredential.user };
       
     } catch (error: any) {
@@ -80,9 +72,7 @@ export class AuthService {
       } else {
         errorMessage = error.toString();
       }
-      
-      await this.showDebugToast(`Step 5: Error - ${errorMessage}`);
-      
+            
       return { 
         success: false, 
         error: this.getFriendlyErrorMessage(error.code),
@@ -93,10 +83,8 @@ export class AuthService {
 
   // Also update the email login with timeout
   async login(email: string, password: string): Promise<any> {
-    await this.showDebugToast('Step 1: Starting email login');
     
     try {
-      await this.showDebugToast('Step 2: Calling signInWithEmailAndPassword');
       
       // Add timeout for email login too
       const loginPromise = signInWithEmailAndPassword(auth, email, password);
@@ -106,12 +94,10 @@ export class AuthService {
       
       const userCredential = await Promise.race([loginPromise, timeoutPromise]) as any;
       
-      await this.showDebugToast('Step 3: Email login successful!');
       return { success: true, user: userCredential.user };
       
     } catch (error: any) {
       let errorMessage = error.code ? `${error.code}: ${error.message}` : error.toString();
-      await this.showDebugToast(`Step 4: Error - ${errorMessage}`);
       return { success: false, error: this.getFriendlyErrorMessage(error.code) };
     }
   }
@@ -120,14 +106,11 @@ export class AuthService {
 
   // Logout
   async logout(): Promise<void> {
-    await this.showDebugToast('Starting logout');
     
     try {
       await signOut(auth);
-      await this.showDebugToast('Logout successful');
       this.router.navigate(['/login']);
     } catch (error) {
-      await this.showDebugToast('Logout error occurred');
       console.error('Logout error:', error);
     }
   }

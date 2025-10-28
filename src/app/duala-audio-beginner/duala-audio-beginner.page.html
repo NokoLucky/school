@@ -1,4 +1,4 @@
-<!-- bassa-audio-beginner.page.html -->
+<!-- duala-audio-beginner.page.html -->
 <ion-header>
   <ion-toolbar class="header-toolbar">
     <ion-buttons slot="start">
@@ -93,7 +93,19 @@
     <div class="pdf-header">
       <h3>{{ currentPdfName }}</h3>
       <div class="pdf-controls">
-       
+        <!-- Zoom Controls -->
+        <div class="zoom-controls">
+          <ion-button fill="clear" size="small" (click)="zoomOut()" color="medium" [disabled]="scale <= minScale">
+            <ion-icon name="remove-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" size="small" (click)="resetZoom()" color="medium">
+            <ion-badge color="medium">{{ (scale * 100).toFixed(0) }}%</ion-badge>
+          </ion-button>
+          <ion-button fill="clear" size="small" (click)="zoomIn()" color="medium" [disabled]="scale >= maxScale">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+        </div>
+        
         <ion-button fill="clear" size="small" (click)="closePdfViewer()" color="medium">
           <ion-icon name="close" slot="start"></ion-icon>
           Close
@@ -106,14 +118,18 @@
         <ion-spinner name="crescent"></ion-spinner>
         <p>Loading document...</p>
       </div>
-      <iframe 
-        #pdfIframe
-        *ngIf="currentPdfUrl && !isPdfLoading"
-        [src]="currentPdfUrl" 
-        class="pdf-iframe"
-        frameborder="0"
-        (load)="isPdfLoading = false" 
-      ></iframe>
+      
+      <!-- Zoomable PDF Container -->
+      <div #pdfContainer class="zoomable-pdf-container">
+        <iframe 
+          #pdfIframe
+          *ngIf="currentPdfUrl && !isPdfLoading"
+          [src]="currentPdfUrl" 
+          class="pdf-iframe"
+          frameborder="0"
+          (load)="isPdfLoading = false" 
+        ></iframe>
+      </div>
     </div>
   </div>
 </ion-content>
