@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
-import { getAuth } from 'firebase/auth';
+import { getAuth, initializeAuth, indexedDBLocalPersistence } from 'firebase/auth';
+import { Capacitor } from '@capacitor/core';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMw2N8JxzKezAVsLs_96nDP2-fC5dWDWA",
@@ -15,10 +16,20 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Get Firebase services with error handling
+// Initialize Auth with proper persistence for native platforms
 let auth, db;
 try {
-  auth = getAuth(app);
+  // Use initializeAuth with IndexedDB persistence for native iOS
+  if (Capacitor.isNativePlatform()) {
+    auth = initializeAuth(app, {
+      persistence: indexedDBLocalPersistence
+    });
+    console.log('Firebase Auth initialized for native platform with IndexedDB persistence');
+  } else {
+    auth = getAuth(app);
+    console.log('Firebase Auth initialized for web platform');
+  }
+  
   db = getDatabase(app);
   console.log('Firebase services initialized successfully');
 } catch (error) {
