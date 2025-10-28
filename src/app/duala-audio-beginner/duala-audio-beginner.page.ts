@@ -38,7 +38,7 @@ export class DualaAudioBeginnerPage implements OnInit {
   private scrollInterval: any = null;
 
   // Pinch-to-zoom variables
-  scale: number = 1.0;
+  scale: number = 1.2;
   maxScale: number = 3.0;
   minScale: number = 0.5;
   isZooming: boolean = false;
@@ -60,13 +60,14 @@ export class DualaAudioBeginnerPage implements OnInit {
     this.loadAudioAndReadingLessons();
   }
 
-  // Add pinch-to-zoom event listeners
+  // pinch-to-zoom event listeners
   @HostListener('touchstart', ['$event'])
   onTouchStart(event: TouchEvent) {
-    if (!this.showPdfViewer) return;
+    if (!this.showPdfViewer || !this.pdfContainer) return;
     
     if (event.touches.length === 2) {
       event.preventDefault();
+      event.stopPropagation();
       this.isZooming = true;
       this.lastTouchDistance = this.getTouchDistance(event.touches);
     }
@@ -77,24 +78,66 @@ export class DualaAudioBeginnerPage implements OnInit {
     if (!this.showPdfViewer || !this.isZooming || event.touches.length !== 2) return;
     
     event.preventDefault();
+    event.stopPropagation();
     
     const currentDistance = this.getTouchDistance(event.touches);
-    const scaleChange = currentDistance / this.lastTouchDistance;
     
-    this.scale *= scaleChange;
-    this.scale = Math.max(this.minScale, Math.min(this.maxScale, this.scale));
-    
-    this.applyZoom();
+    if (this.lastTouchDistance > 0) {
+      const scaleChange = currentDistance / this.lastTouchDistance;
+      this.scale *= scaleChange;
+      this.scale = Math.max(this.minScale, Math.min(this.maxScale, this.scale));
+      this.applyZoom();
+    }
     
     this.lastTouchDistance = currentDistance;
   }
 
   @HostListener('touchend', ['$event'])
+  @HostListener('touchcancel', ['$event'])
   onTouchEnd(event: TouchEvent) {
-    if (event.touches.length < 2) {
-      this.isZooming = false;
-      this.lastTouchDistance = null;
+    this.isZooming = false;
+    this.lastTouchDistance = null;
+  }
+
+  // Alternative: gesture detection to the PDF container directly
+  ngAfterViewInit() {
+    this.setupGestureHandlers();
+  }
+
+  private setupGestureHandlers() {
+    const container = this.pdfContainer?.nativeElement;
+    if (container) {
+      container.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false });
+      container.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
+      container.addEventListener('touchend', this.handleTouchEnd.bind(this));
     }
+  }
+
+  private handleTouchStart(event: TouchEvent) {
+    if (event.touches.length === 2) {
+      event.preventDefault();
+      this.isZooming = true;
+      this.lastTouchDistance = this.getTouchDistance(event.touches);
+    }
+  }
+
+  private handleTouchMove(event: TouchEvent) {
+    if (this.isZooming && event.touches.length === 2) {
+      event.preventDefault();
+      const currentDistance = this.getTouchDistance(event.touches);
+      const scaleChange = currentDistance / this.lastTouchDistance;
+      
+      this.scale *= scaleChange;
+      this.scale = Math.max(this.minScale, Math.min(this.maxScale, this.scale));
+      this.applyZoom();
+      
+      this.lastTouchDistance = currentDistance;
+    }
+  }
+
+  private handleTouchEnd(event: TouchEvent) {
+    this.isZooming = false;
+    this.lastTouchDistance = null;
   }
 
   private getTouchDistance(touches: TouchList): number {
@@ -106,13 +149,36 @@ export class DualaAudioBeginnerPage implements OnInit {
     );
   }
 
-  private applyZoom() {
-    const container = this.pdfContainer?.nativeElement;
-    if (container) {
-      container.style.transform = `scale(${this.scale})`;
-      container.style.transformOrigin = 'center center';
-    }
+private applyZoom() {
+  const container = this.pdfContainer?.nativeElement;
+  const iframe = this.pdfIframe?.nativeElement;
+  
+  if (container && iframe) {
+    // Apply transform to the container
+    container.style.transform = `scale(${this.scale})`;
+    container.style.transformOrigin = 'center center';
+    
+    // Also adjust the iframe dimensions to match the zoom level
+    iframe.style.width = `${100 / this.scale}%`;
+    iframe.style.height = `${100 / this.scale}%`;
+    iframe.style.transform = `scale(${this.scale})`;
+    iframe.style.transformOrigin = 'center center';
   }
+}
+
+// Also update the resetZoom method to reset iframe dimensions
+resetZoom() {
+  this.scale = 1.2;
+  this.applyZoom();
+  
+  // Reset iframe dimensions
+  const iframe = this.pdfIframe?.nativeElement;
+  if (iframe) {
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.transform = 'none';
+  }
+}
 
   // Zoom controls
   zoomIn() {
@@ -125,12 +191,6 @@ export class DualaAudioBeginnerPage implements OnInit {
     this.applyZoom();
   }
 
-  resetZoom() {
-    this.scale = 1.0;
-    this.applyZoom();
-  }
-
-  // Your existing methods remain the same...
   async loadAudioAndReadingLessons() {
     this.isLoading = true;
     this.error = '';
@@ -266,7 +326,7 @@ export class DualaAudioBeginnerPage implements OnInit {
     this.showPdfViewer = true;
     
     // Reset zoom when loading new document
-    this.scale = 1.0;
+    this.scale = 1.2;
     
     console.log('Loading document URL:', documentUrl);
     
@@ -574,7 +634,7 @@ export class DualaAudioBeginnerPage implements OnInit {
     this.currentPdfUrl = null;
     this.stopAutoScroll();
     // Reset zoom when closing
-    this.scale = 1.0;
+    this.scale = 1.2;
   }
 
   downloadDocument() {

@@ -87,39 +87,44 @@
       <p>No lessons available.</p>
     </div>
   </div>
+</ion-content>
 
-  <!-- PDF Viewer - Takes full screen when active -->
-  <div *ngIf="showPdfViewer" class="fullscreen-pdf-section">
-    <div class="pdf-header">
+<!-- PDF Viewer - OUTSIDE ion-content for full screen -->
+<div *ngIf="showPdfViewer" class="pdf-viewer-container">
+  <!-- PDF Controls Bar - SEPARATE from zoomable content -->
+  <div class="pdf-controls-bar">
+    <div class="pdf-title">
       <h3>{{ currentPdfName }}</h3>
-      <div class="pdf-controls">
-        <!-- Zoom Controls -->
-        <div class="zoom-controls">
-          <ion-button fill="clear" size="small" (click)="zoomOut()" color="medium" [disabled]="scale <= minScale">
-            <ion-icon name="remove-outline"></ion-icon>
-          </ion-button>
-          <ion-button fill="clear" size="small" (click)="resetZoom()" color="medium">
-            <ion-badge color="medium">{{ (scale * 100).toFixed(0) }}%</ion-badge>
-          </ion-button>
-          <ion-button fill="clear" size="small" (click)="zoomIn()" color="medium" [disabled]="scale >= maxScale">
-            <ion-icon name="add-outline"></ion-icon>
-          </ion-button>
-        </div>
-        
-        <ion-button fill="clear" size="small" (click)="closePdfViewer()" color="medium">
-          <ion-icon name="close" slot="start"></ion-icon>
-          Close
+    </div>
+    <div class="pdf-controls">
+      <!-- Zoom Controls -->
+      <div class="zoom-controls">
+        <ion-button fill="clear" size="small" (click)="zoomOut()" color="medium" [disabled]="scale <= minScale">
+          <ion-icon name="remove-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="small" (click)="resetZoom()" color="medium">
+          <ion-badge color="medium">{{ (scale * 100).toFixed(0) }}%</ion-badge>
+        </ion-button>
+        <ion-button fill="clear" size="small" (click)="zoomIn()" color="medium" [disabled]="scale >= maxScale">
+          <ion-icon name="add-outline"></ion-icon>
         </ion-button>
       </div>
+      
+      <ion-button fill="clear" size="small" (click)="closePdfViewer()" color="medium">
+        <ion-icon name="close" slot="start"></ion-icon>
+        Close
+      </ion-button>
+    </div>
+  </div>
+  
+  <!-- PDF Content - ZOOMABLE AREA ONLY -->
+  <div class="pdf-content-container">
+    <div *ngIf="isPdfLoading" class="pdf-loading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Loading document...</p>
     </div>
     
-    <div class="pdf-container" #pdfViewer>
-      <div *ngIf="isPdfLoading" class="pdf-loading">
-        <ion-spinner name="crescent"></ion-spinner>
-        <p>Loading document...</p>
-      </div>
-      
-      <!-- Zoomable PDF Container -->
+    <div class="pdf-scroll-container">
       <div #pdfContainer class="zoomable-pdf-container">
         <iframe 
           #pdfIframe
@@ -132,7 +137,7 @@
       </div>
     </div>
   </div>
-</ion-content>
+</div>
 
 <!-- 🎵 Player Controls - Only show for audio tracks -->
 <ion-footer *ngIf="activeTrack && !activeTrack.isDocumentOnly" class="slide-up-footer">

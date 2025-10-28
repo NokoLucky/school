@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ElementRef, HostListener } from '@angular/core';
 import { IonRange, LoadingController, AlertController } from '@ionic/angular';
 import { Howl } from 'howler';
 import { ref, onValue } from 'firebase/database';
@@ -13,7 +13,7 @@ export interface Track {
   pdfUrl?: string;
   pdfName?: string;
   hasDocument?: boolean;
-  isDocumentOnly?: boolean; // New flag for documents without audio
+  isDocumentOnly?: boolean;
 }
 
 @Component({
@@ -22,7 +22,6 @@ export interface Track {
   styleUrls: ['./yoruba-audio-beginner.page.css'],
 })
 export class YorubaAudioBeginnerPage implements OnInit {
-
   playlist: Track[] = [];
   activeTrack: Track = null;
   player: Howl = null;
@@ -37,9 +36,17 @@ export class YorubaAudioBeginnerPage implements OnInit {
   autoScrollEnabled: boolean = true;
   private scrollInterval: any = null;
 
+  // Pinch-to-zoom variables
+  scale: number = 1.2;
+  maxScale: number = 3.0;
+  minScale: number = 0.5;
+  isZooming: boolean = false;
+  lastTouchDistance: number = null;
+
   @ViewChild('range', { static: false }) range: IonRange;
   @ViewChild('pdfViewer', { static: false }) pdfViewer: ElementRef;
   @ViewChild('pdfIframe', { static: false }) pdfIframe: ElementRef;
+  @ViewChild('pdfContainer', { static: false }) pdfContainer: ElementRef;
 
   constructor(
     private loadingCtrl: LoadingController,
@@ -51,6 +58,138 @@ export class YorubaAudioBeginnerPage implements OnInit {
   ngOnInit() {
     this.loadAudioAndReadingLessons();
   }
+
+  // pinch-to-zoom event listeners
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    if (!this.showPdfViewer || !this.pdfContainer) return;
+    
+    if (event.touches.length === 2) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.isZooming = true;
+      this.lastTouchDistance = this.getTouchDistance(event.touches);
+    }
+  }
+
+  @HostListener('touchmove', ['$event'])
+  onTouchMove(event: TouchEvent) {
+    if (!this.showPdfViewer || !this.isZooming || event.touches.length !== 2) return;
+    
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const currentDistance = this.getTouchDistance(event.touches);
+    
+    if (this.lastTouchDistance > 0) {
+      const scaleChange = currentDistance / this.lastTouchDistance;
+      this.scale *= scaleChange;
+      this.scale = Math.max(this.minScale, Math.min(this.maxScale, this.scale));
+      this.applyZoom();
+    }
+    
+    this.lastTouchDistance = currentDistance;
+  }
+
+  @HostListener('touchend', ['$event'])
+  @HostListener('touchcancel', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    this.isZooming = false;
+    this.lastTouchDistance = null;
+  }
+
+  // Alternative: gesture detection to the PDF container directly
+  ngAfterViewInit() {
+    this.setupGestureHandlers();
+  }
+
+  private setupGestureHandlers() {
+    const container = this.pdfContainer?.nativeElement;
+    if (container) {
+      container.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false });
+      container.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
+      container.addEventListener('touchend', this.handleTouchEnd.bind(this));
+    }
+  }
+
+  private handleTouchStart(event: TouchEvent) {
+    if (event.touches.length === 2) {
+      event.preventDefault();
+      this.isZooming = true;
+      this.lastTouchDistance = this.getTouchDistance(event.touches);
+    }
+  }
+
+  private handleTouchMove(event: TouchEvent) {
+    if (this.isZooming && event.touches.length === 2) {
+      event.preventDefault();
+      const currentDistance = this.getTouchDistance(event.touches);
+      const scaleChange = currentDistance / this.lastTouchDistance;
+      
+      this.scale *= scaleChange;
+      this.scale = Math.max(this.minScale, Math.min(this.maxScale, this.scale));
+      this.applyZoom();
+      
+      this.lastTouchDistance = currentDistance;
+    }
+  }
+
+  private handleTouchEnd(event: TouchEvent) {
+    this.isZooming = false;
+    this.lastTouchDistance = null;
+  }
+
+  private getTouchDistance(touches: TouchList): number {
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    return Math.sqrt(
+      Math.pow(touch2.clientX - touch1.clientX, 2) + 
+      Math.pow(touch2.clientY - touch1.clientY, 2)
+    );
+  }
+
+private applyZoom() {
+  const container = this.pdfContainer?.nativeElement;
+  const iframe = this.pdfIframe?.nativeElement;
+  
+  if (container && iframe) {
+    // Apply transform to the container
+    container.style.transform = `scale(${this.scale})`;
+    container.style.transformOrigin = 'center center';
+    
+    // Also adjust the iframe dimensions to match the zoom level
+    iframe.style.width = `${100 / this.scale}%`;
+    iframe.style.height = `${100 / this.scale}%`;
+    iframe.style.transform = `scale(${this.scale})`;
+    iframe.style.transformOrigin = 'center center';
+  }
+}
+
+// Also update the resetZoom method to reset iframe dimensions
+resetZoom() {
+  this.scale = 1.2;
+  this.applyZoom();
+  
+  // Reset iframe dimensions
+  const iframe = this.pdfIframe?.nativeElement;
+  if (iframe) {
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.transform = 'none';
+  }
+}
+
+  // Zoom controls
+  zoomIn() {
+    this.scale = Math.min(this.maxScale, this.scale + 0.2);
+    this.applyZoom();
+  }
+
+  zoomOut() {
+    this.scale = Math.max(this.minScale, this.scale - 0.2);
+    this.applyZoom();
+  }
+
 
   async loadAudioAndReadingLessons() {
     this.isLoading = true;
@@ -71,7 +210,6 @@ export class YorubaAudioBeginnerPage implements OnInit {
 
       console.log('Loading audio and reading lessons...');
 
-      // Load both audio and reading lessons
       onValue(
         audioRef,
         (audioSnapshot) => {
@@ -102,29 +240,26 @@ export class YorubaAudioBeginnerPage implements OnInit {
   private processLessonsData(audioSnapshot: any, readingSnapshot: any) {
     const combinedPlaylist: Track[] = [];
     
-    // Store reading data for download functionality
     if (readingSnapshot.exists()) {
       const readingData = readingSnapshot.val();
       localStorage.setItem('readingData', JSON.stringify(readingData));
       console.log('Reading data:', readingData);
 
-      // Process reading lessons (documents)
       Object.keys(readingData).forEach((key) => {
         const documentUrl = this.getDocumentViewUrl(readingData[key]);
         combinedPlaylist.push({
           name: key,
-          path: null, // No audio path
-          proxyPath: null, // No audio proxy path
+          path: null,
+          proxyPath: null,
           pdfUrl: documentUrl,
           pdfName: key,
           hasDocument: true,
-          isDocumentOnly: true, // This is a document-only lesson
+          isDocumentOnly: true,
           loading: false
         });
       });
     }
 
-    // Process audio lessons (only if they exist)
     if (audioSnapshot.exists()) {
       const audioData = audioSnapshot.val();
       console.log('Audio data:', audioData);
@@ -133,7 +268,6 @@ export class YorubaAudioBeginnerPage implements OnInit {
         const directUrl = this.convertToEmbedUrl(audioData[key]);
         const proxyUrl = this.getProxyUrl(directUrl);
         
-        // Find matching document by name
         let pdfKey = null;
         let documentUrl = null;
         
@@ -143,13 +277,11 @@ export class YorubaAudioBeginnerPage implements OnInit {
           documentUrl = pdfKey ? this.getDocumentViewUrl(readingData[pdfKey]) : null;
         }
         
-        // Check if this audio already exists in combined playlist (as document-only)
         const existingDocIndex = combinedPlaylist.findIndex(item => 
           item.isDocumentOnly && this.normalizeName(item.name) === this.normalizeName(pdfKey || key)
         );
 
         if (existingDocIndex !== -1) {
-          // Replace document-only entry with audio+document entry
           combinedPlaylist[existingDocIndex] = {
             name: pdfKey || key,
             path: directUrl,
@@ -161,7 +293,6 @@ export class YorubaAudioBeginnerPage implements OnInit {
             loading: false
           };
         } else {
-          // Add new audio entry
           combinedPlaylist.push({
             name: pdfKey || key,
             path: directUrl,
@@ -176,7 +307,6 @@ export class YorubaAudioBeginnerPage implements OnInit {
       });
     }
 
-    // Sort by extracted number
     this.playlist = combinedPlaylist.sort((a, b) => this.extractNumber(a.name) - this.extractNumber(b.name));
     
     console.log('Final combined playlist:', this.playlist);
@@ -189,6 +319,27 @@ export class YorubaAudioBeginnerPage implements OnInit {
     this.isLoading = false;
   }
 
+  // Reset zoom when opening new document
+  async loadDocument(documentUrl: string, documentName: string) {
+    this.isPdfLoading = true;
+    this.currentPdfName = documentName;
+    this.showPdfViewer = true;
+    
+    // Reset zoom when loading new document
+    this.scale = 1.2;
+    
+    console.log('Loading document URL:', documentUrl);
+    
+    this.currentPdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(documentUrl);
+    
+    setTimeout(() => {
+      this.isPdfLoading = false;
+      // Re-apply zoom after document loads
+      setTimeout(() => this.applyZoom(), 100);
+    }, 3000);
+  }
+
+  // Your existing methods continue...
   private normalizeName(name: string): string {
     return name.toLowerCase().replace(/[^a-z0-9]/g, '');
   }
@@ -233,7 +384,6 @@ export class YorubaAudioBeginnerPage implements OnInit {
     });
   }
 
-  // Convert Google Drive view link to a direct download URL (for audio only)
   private convertToEmbedUrl(url: string): string {
     const match = url.match(/\/d\/([^\/]+)/);
     if (match && match[1]) {
@@ -243,7 +393,6 @@ export class YorubaAudioBeginnerPage implements OnInit {
     return url;
   }
 
-  // Generate proxy URL
   private getProxyUrl(originalUrl: string): string {
     return `https://corsproxy.io/?${encodeURIComponent(originalUrl)}`;
   }
@@ -270,16 +419,13 @@ export class YorubaAudioBeginnerPage implements OnInit {
   }
 
   async start(track: Track) {
-    // For document-only items, just open the document
     if (track.isDocumentOnly) {
       this.loadDocument(track.pdfUrl, track.pdfName);
       return;
     }
 
-    // Set loading state for this specific track
     track.loading = true;
     
-    // Reset other tracks' loading state
     this.playlist.forEach(t => {
       if (t !== track && t.loading) {
         t.loading = false;
@@ -289,7 +435,6 @@ export class YorubaAudioBeginnerPage implements OnInit {
     this.stopAudio();
     console.log('Starting track:', track.name);
 
-    // Load document if available
     if (track.pdfUrl) {
       this.loadDocument(track.pdfUrl, track.pdfName);
     } else {
@@ -310,7 +455,6 @@ export class YorubaAudioBeginnerPage implements OnInit {
         track.loading = false;
         this.updateProgress();
         
-        // Start auto-scroll if document is open and auto-scroll is enabled
         if (this.showPdfViewer && this.autoScrollEnabled) {
           setTimeout(() => {
             this.startAutoScroll();
@@ -345,25 +489,10 @@ export class YorubaAudioBeginnerPage implements OnInit {
     this.player.play();
   }
 
-  // New method to open document directly (for document-only items)
   openDocument(track: Track) {
     if (track.pdfUrl) {
       this.loadDocument(track.pdfUrl, track.pdfName);
     }
-  }
-
-  async loadDocument(documentUrl: string, documentName: string) {
-    this.isPdfLoading = true;
-    this.currentPdfName = documentName;
-    this.showPdfViewer = true;
-    
-    console.log('Loading document URL:', documentUrl);
-    
-    this.currentPdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(documentUrl);
-    
-    setTimeout(() => {
-      this.isPdfLoading = false;
-    }, 3000);
   }
 
   startAutoScroll() {
@@ -504,6 +633,8 @@ export class YorubaAudioBeginnerPage implements OnInit {
     this.showPdfViewer = false;
     this.currentPdfUrl = null;
     this.stopAutoScroll();
+    // Reset zoom when closing
+    this.scale = 1.0;
   }
 
   downloadDocument() {
